@@ -1,5 +1,8 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using RestaurantSystem.ConsoleView;
+using RestaurantSystem.DataAccessLayer;
+using RestaurantSystem.Services;
 
 namespace RestaurantSystem
 {
@@ -7,7 +10,12 @@ namespace RestaurantSystem
     {
         static void Main(string[] args)
         {
-            ConsoleClient client = new ConsoleClient();
+            IServiceCollection services = new ServiceCollection();
+            services.SetEFDataDependencies();
+            services.SetServices();
+            services.SetConsoleClientDependencies();
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+            ConsoleClient client = serviceProvider.GetRequiredService<ConsoleClient>();
             client.Start();
         }
     }

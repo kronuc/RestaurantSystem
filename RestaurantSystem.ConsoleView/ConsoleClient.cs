@@ -4,9 +4,16 @@ namespace RestaurantSystem.ConsoleView
 {
     public class ConsoleClient
     {
+        private MainMenuPage _mainMenuPage;
+
+        public ConsoleClient(MainMenuPage mainMenuPage)
+        {
+            _mainMenuPage = mainMenuPage;
+        }
+
         public void Start()
         {
-            Console.WriteLine("restaurantSystem");
+            _mainMenuPage.Start();
         }
     }
 }
