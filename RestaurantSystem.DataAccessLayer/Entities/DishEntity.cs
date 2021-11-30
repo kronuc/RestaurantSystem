@@ -11,7 +11,6 @@ namespace RestaurantSystem.DataModel
     {
         public int DishTypeEntityId { get; set; }
         public DishTypeEntity DishTypeEntity { get; set; }
-
         public float Weight { get; set; }
         public float Price { get; set; }
     }

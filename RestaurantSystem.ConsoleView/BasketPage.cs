@@ -13,7 +13,7 @@ namespace RestaurantSystem.ConsoleView
     {
         #region static
 
-        public static Basket<int> SessionBasket { get; set; }
+        public static int SessionBasket { get; set; }
 
         #endregion
 
@@ -69,14 +69,14 @@ namespace RestaurantSystem.ConsoleView
         {
             Console.WriteLine("type your name");
             var name = GetCommand();
-            SessionBasket = _basketService.CreateBasket(name);
+            SessionBasket = _basketService.CreateBasket(name).Id;
             Console.WriteLine("basket created");
         }
 
         private void InitialiseServices()
         {
             _basketService.CreateBasket(Arg.Any<string>()).Returns(new Basket<int>() { Id = 1, UserName = "some name" });
-            _basketService.GetDishesInBasket(Arg.Any<Basket<int>>()).Returns(
+            _basketService.GetDishesInBasket(Arg.Any<int>()).Returns(
                 new List<Dish<int>>(){
                     new Dish<int>() {Id = 1, TypeId = 0, Price = 1, Weight = 2 },
                     new Dish<int>() {Id = 2, TypeId = 0, Price = 1, Weight = 2 },
@@ -154,7 +154,7 @@ namespace RestaurantSystem.ConsoleView
             if (_dishesInCurrentSession.ContainsKey(dishNumber))
             {
                 var dish = _dishesInCurrentSession[dishNumber];
-                _basketService.RemoveDishFromBasket( SessionBasket.Id, dish.Id);
+                _basketService.RemoveDishFromBasket( SessionBasket, dish.Id);
             }
         }
 

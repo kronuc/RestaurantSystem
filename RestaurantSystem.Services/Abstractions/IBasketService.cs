@@ -10,10 +10,10 @@ namespace RestaurantSystem.Services.Abstractions
     public interface IBasketService<T>
     {
         public Basket<T> CreateBasket(string UserName);
-        public IEnumerable<Dish<T>> GetDishesInBasket(Basket<T> basket);
+        public IEnumerable<Dish<T>> GetDishesInBasket(int basket);
         public Basket<int> GetBasketById(T basketId);
-        public void AddDishToBasket(Dish<T> dish, T basketId);
+        public void AddDishToBasket(int dish, T basketId);
         public void RemoveDishFromBasket(T basketId, T dishId);
-        public void MakeOrder(Basket<int> basket);
+        public void MakeOrder(int basket);
     }
 }

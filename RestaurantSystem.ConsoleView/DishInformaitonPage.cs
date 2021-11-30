@@ -26,7 +26,6 @@ namespace RestaurantSystem.ConsoleView
             _ingredientService = Substitute.For<IIngredientService<int>>();
             _basketService = Substitute.For<IBasketService<int>>();
             _dishService = Substitute.For<IDishService<int>>();
-            InitialiseServices();
         }
 
         public DishInformaitonPage(IDishService<int> dishService, IBasketService<int> basketService, IIngredientService<int> ingredientService)
@@ -65,28 +64,6 @@ namespace RestaurantSystem.ConsoleView
 
         #region private
        
-        private void InitialiseServices()
-        {
-            _dishService.FindDishByType(Arg.Any<DishType<int>>()).Returns(
-                new List<Dish<int>>(){
-                    new Dish<int>() {Id = 1, TypeId = 0, Price = 1, Weight = 2 },
-                    new Dish<int>() {Id = 2, TypeId = 0, Price = 1, Weight = 2 },
-                    new Dish<int>() {Id = 3, TypeId = 0, Price = 1, Weight = 2 },
-                    new Dish<int>() {Id = 4, TypeId = 0, Price = 1, Weight = 2 } 
-                });
-
-            _ingredientService.GetAllIngredientInDish(Arg.Any<int>()).Returns(
-                new List<Ingredient<int>>()
-                {
-                    new Ingredient<int>() {Id = 1, Decription = "something", Name = "some", Weight = 15},
-                    new Ingredient<int>() {Id = 2, Decription = "something", Name = "some", Weight = 15},
-                    new Ingredient<int>() {Id = 3, Decription = "something", Name = "some", Weight = 15},
-                    new Ingredient<int>() {Id = 4, Decription = "something", Name = "some", Weight = 15}
-                });
-
-            _basketService.CreateBasket(Arg.Any<string>()).Returns(new Basket<int>() { Id = 1, UserName = "some name" });
-        }
-
         private void ShowHeader()
         {
             Console.WriteLine(
@@ -153,7 +130,7 @@ namespace RestaurantSystem.ConsoleView
 
         private void ShowAllSises()
         {
-            var dishes = _dishService.FindDishByType(DishType);
+            var dishes = _dishService.FindDishByType(DishType.Id);
             var i = 0;
             foreach(var dish in dishes)
             {
@@ -169,15 +146,15 @@ namespace RestaurantSystem.ConsoleView
             if (_dishesInCurrentSession.ContainsKey(dishNumber))
             {
                 var dish = _dishesInCurrentSession[dishNumber];
-                if (BasketPage.SessionBasket != null)
+                if (BasketPage.SessionBasket != 0)
                 {
-                    _basketService.AddDishToBasket(dish, BasketPage.SessionBasket.Id);
+                    _basketService.AddDishToBasket(dish.Id, BasketPage.SessionBasket);
                 }
                 else
                 {
                     Console.WriteLine("type your name");
                     var name = ReadCommand();
-                    BasketPage.SessionBasket = _basketService.CreateBasket(name);
+                    BasketPage.SessionBasket = _basketService.CreateBasket(name).Id;
                     Console.WriteLine("basket created");
                 }
             }

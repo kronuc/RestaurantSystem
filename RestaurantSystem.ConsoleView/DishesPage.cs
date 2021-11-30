@@ -30,7 +30,7 @@ namespace RestaurantSystem.ConsoleView
             _dishesInCurrentSession = new Dictionary<string, DishType<int>>();
         }
 
-        #endregion //ctrs
+        #endregion ctrs
 
         #region public
 
@@ -48,30 +48,7 @@ namespace RestaurantSystem.ConsoleView
         #endregion //public
 
         #region private
-
-        private void InitialiseServices()
-        {
-            _dishTypeService
-                .GetAllDishTypes()
-                .Returns(
-                    new List<DishType<int>>()
-                    {
-                        new DishType<int>() { Id = 1, Name = "some dish" },
-                        new DishType<int>() { Id = 2, Name = "some dish 2" },
-                        new DishType<int>() { Id = 3, Name = "some dish 3" }
-                    });
-            _dishTypeService
-                .GetDishTypesByName(Arg.Any<string>())
-                .Returns(
-                    new List<DishType<int>>()
-                    {
-                        new DishType<int>() { Id = 1, Name = "some dish" },
-                        new DishType<int>() { Id = 2, Name = "some dish 2" },
-                        new DishType<int>() { Id = 3, Name = "some dish 3" }
-                    });
-        }
-
-
+        
         public bool OperateConmmand(string command)
         {
             var exitFromApp = false;

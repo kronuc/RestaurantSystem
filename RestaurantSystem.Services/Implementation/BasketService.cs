@@ -20,14 +20,14 @@ namespace RestaurantSystem.Services.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public void AddDishToBasket(Dish<int> dish, int basketId)
+        public void AddDishToBasket(int dish, int basketId)
         {
             var newDishInBasket = new DishInBasketEntity()
             {
-                DishEntityId = dish.Id,
+                DishEntityId = dish,
                 BasketEntityId = basketId
             };
-            if (_unitOfWork.DishRepository.GetById(dish.Id) != null || _unitOfWork.BasketRepository.GetById(basketId) != null)
+            if (_unitOfWork.DishRepository.GetById(dish) != null || _unitOfWork.BasketRepository.GetById(basketId) != null)
             {
                 _unitOfWork
                     .DishInBasketRepository
@@ -67,11 +67,11 @@ namespace RestaurantSystem.Services.Implementation
             return result;
         }
 
-        public IEnumerable<Dish<int>> GetDishesInBasket(Basket<int> basket)
+        public IEnumerable<Dish<int>> GetDishesInBasket(int basket)
         {
             var result = _unitOfWork
                 .DishRepository
-                .GetDishEntitiesInBasket(basket.Id)
+                .GetDishEntitiesInBasket(basket)
                 .Select(dish => dish.ToModelEntity());
             return result;
         }
@@ -82,8 +82,12 @@ namespace RestaurantSystem.Services.Implementation
 
         public void RemoveDishFromBasket(int basketId, int dishId)
         {
+
             _unitOfWork.DishInBasketRepository.RemooveDishFromBasket(basketId, dishId);
             _unitOfWork.Save();
         }
+
+        public void MakeOrder(int basket)
+        { }
     }
 }

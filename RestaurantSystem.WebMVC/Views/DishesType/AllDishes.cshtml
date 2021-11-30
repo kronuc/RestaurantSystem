@@ -1,0 +1,27 @@
+﻿@model IEnumerable<RestaurantSystem.DataModel.DishType<int>>
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <title>All dish types</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div>
+    <a href="/Dishes">back</a>
+</div>
+<table>
+    @foreach (var dishType in Model)
+    {
+    <tr>
+        <td>@dishType.Name</td>
+        <td>@dishType.Description</td>
+        <td><a href="/Dishes/@dishType.Id">show all sises</a></td>
+    </tr>
+    }
+</table>
+</body>
+</html>

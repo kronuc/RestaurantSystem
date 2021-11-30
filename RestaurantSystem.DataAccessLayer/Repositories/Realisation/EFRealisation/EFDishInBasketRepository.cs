@@ -17,10 +17,10 @@ namespace RestaurantSystem.DataAccessLayer.Repositories.Realisation.EFRealisatio
 
         public void RemooveDishFromBasket(int basketId, int dishId)
         {
-            var dishInBasketForRemooving = _dbContext
+            var dishInBasketForRemoving = _dbContext
                 .DishInBaskets
-                .Where(dishInBasket => dishInBasket.DishEntityId == dishId & dishInBasket.BasketEntityId == basketId)
-                .FirstOrDefault();
-            _dbContext.DishInBaskets.Remove(dishInBasketForRemooving);        }
+                .FirstOrDefault(dishInBasket => dishInBasket.DishEntityId == dishId & dishInBasket.BasketEntityId == basketId);
+            _dbContext.DishInBaskets.Remove(dishInBasketForRemoving);
+        }
     }
 }

@@ -19,11 +19,11 @@ namespace RestaurantSystem.Services.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Dish<int>> FindDishByType(DishType<int> type)
+        public IEnumerable<Dish<int>> FindDishByType(int typeId)
         {
             var result =  _unitOfWork
                 .DishRepository
-                .GetDishByType(type.Id)
+                .GetDishByType(typeId)
                 .Select(dish => dish.ToModelEntity())
                 .ToList();
 

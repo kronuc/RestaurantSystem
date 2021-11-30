@@ -9,7 +9,7 @@ namespace RestaurantSystem.Services.Abstractions
 {
     public interface IDishService<TKey>
     {
-        public IEnumerable<Dish<TKey>> FindDishByType(DishType<TKey> type);
+        public IEnumerable<Dish<TKey>> FindDishByType(TKey type);
         public Dish<TKey> GetDishById(TKey Id);
     }
 }
